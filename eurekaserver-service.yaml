@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: day4-juhyun-eurekaserver-deployment
+  namespace: group1-team3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: day4-juhyun-eurekaserver-app
+  template:
+    metadata:
+      labels:
+        app: day4-juhyun-eurekaserver-app
+    spec:
+      containers:
+        - name: day4-juhyun-eurekaserver-con
+          image: k8s-vga-worker1:5000/group1-team3-juhyun-day4-eurekaserver:s13
+          ports:
+            - containerPort: 9201
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: day4-juhyun-eurekaserver-service
+spec:
+  selector:
+    app: day4-juhyun-eurekaserver-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9201
